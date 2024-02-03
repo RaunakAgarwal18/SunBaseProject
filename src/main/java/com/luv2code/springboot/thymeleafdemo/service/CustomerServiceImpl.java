@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import com.luv2code.springboot.thymeleafdemo.dao.CustomerRepository;
@@ -55,6 +56,21 @@ public class CustomerServiceImpl implements CustomerService {
 	public Page<Customer> findCustomersWithPagination(int offset,int pageSize){
 		Page<Customer> customers = customerRepository.findAll(PageRequest.of(offset,pageSize));
 		return customers;
+	}
+
+	public Page<Customer> findCustomersWithPaginationByFirstName(String keyword,int offset,int pageSize){
+		List<Customer> list = searchCustomersByFirstName(keyword);
+		return new PageImpl<>(list, PageRequest.of(offset, pageSize), list.size());
+    }
+
+	public Page<Customer> findCustomersWithPaginationByEmail(String keyword,int offset,int pageSize){
+		List<Customer> list = searchCustomersByEmail(keyword);
+		return new PageImpl<>(list, PageRequest.of(offset, pageSize), list.size());
+	}
+
+	public Page<Customer> findCustomersWithPaginationByPhone(String keyword,int offset,int pageSize){
+		List<Customer> list = searchCustomersByPhoneNumber(keyword);
+		return new PageImpl<>(list, PageRequest.of(offset, pageSize), list.size());
 	}
 
 	public List<Customer> searchCustomersByFirstName(String keyword) {

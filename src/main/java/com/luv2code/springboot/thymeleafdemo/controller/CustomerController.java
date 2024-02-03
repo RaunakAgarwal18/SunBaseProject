@@ -72,27 +72,25 @@ public class CustomerController {
 	public String searchCustomers(@RequestParam("criteria") String criteria,
 								@RequestParam("keyword") String keyword,
 								@RequestParam(defaultValue = "0") int page,
-								Model model) {
-		List<Customer> searchResults = new ArrayList<>();
-		int pageSize = 5;
-		if ("firstName".equals(criteria)) {
-			searchResults = customerService.searchCustomersByFirstName(keyword);
-		} else if ("email".equals(criteria)) {
-			searchResults = customerService.searchCustomersByEmail(keyword);
-		} else if ("phoneNumber".equals(criteria)) {
-			searchResults = customerService.searchCustomersByPhoneNumber(keyword);
+								Model theModel) {
+		if(keyword.length()==0){
+			// path of the html page
+			return "redirect:/0";
 		}
-		int fromIndex = page * pageSize;
-		int toIndex = Math.min(fromIndex + pageSize, searchResults.size());
-		List<Customer> paginatedList = searchResults.subList(fromIndex, toIndex);
-
-		// Add attributes to the model
-		model.addAttribute("customers", paginatedList);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("totalPages", (int) Math.ceil((double) searchResults.size() / pageSize));
-		int idx = page*pageSize;
-		model.addAttribute("size", idx);
-		return "/customers/list-customers"; // Return the name of your Thymeleaf template
+		Page<Customer> searchResults = null;
+		if ("firstName".equals(criteria)) {
+			searchResults = customerService.findCustomersWithPaginationByFirstName(keyword,0,100);
+		} else if ("email".equals(criteria)) {
+			searchResults = customerService.findCustomersWithPaginationByEmail(keyword,0,100);
+		} else if ("phoneNumber".equals(criteria)) {
+			searchResults = customerService.findCustomersWithPaginationByPhone(keyword,0,100);
+		}
+		theModel.addAttribute("customers", searchResults);
+		theModel.addAttribute("currentPage",page);
+		theModel.addAttribute("totalPages",searchResults.getTotalPages());
+		int idx = page*5;
+		theModel.addAttribute("size", idx);
+		return "customers/list-customers";   // path of the html page
 	}
 
 	@GetMapping("/saveNewCustomer")

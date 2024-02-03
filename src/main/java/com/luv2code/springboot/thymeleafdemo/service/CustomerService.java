@@ -21,5 +21,11 @@ public interface CustomerService {
 	public List<Customer> searchCustomersByEmail(String keyword);
 
 	public List<Customer> searchCustomersByPhoneNumber(String keyword);
+
+	public Page<Customer> findCustomersWithPaginationByFirstName(String keyword,int offset,int pageSize);
+
+	public Page<Customer> findCustomersWithPaginationByEmail(String keyword,int offset,int pageSize);
+
+	public Page<Customer> findCustomersWithPaginationByPhone(String keyword,int offset,int pageSize);
 	
 }

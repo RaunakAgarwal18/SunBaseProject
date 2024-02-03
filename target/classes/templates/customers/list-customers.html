@@ -21,16 +21,16 @@
 	<a th:href="@{/showFormForAdd}" class="btn btn-primary btn-sm mb-3">
 		Add Customer
 	</a>
-	<form th:action="@{/search}" method="get">
+	<form th:action="@{/search}" method="get" style="display: inline;">
 		<select name="criteria">
 			<option value="firstName">Search by First Name</option>
 			<option value="email">Search by Email</option>
 			<option value="phoneNumber">Search by Phone Number</option>
 		</select>
 		<input type="text" name="keyword" placeholder="Search...">
-		<button type="submit">Search</button>
+		<button class="btn btn-success" type="submit">Search</button>
 	</form>
-	<form th:action="@{/saveNewCustomer}" method="get">
+	<form th:action="@{/saveNewCustomer}" method="get" style="display: inline;">
 		<button type="submit" class="btn btn-primary">Sync</button>
 	</form>
 	<table class="table table-bordered table-striped">
