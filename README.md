@@ -5,5 +5,5 @@ Technologies used :
 2. Backend  - Spring Boot
 3. Database - MySQL
 
-Implemented the MySQL in my local storage but can be changed from the application.properties file.
+Implemented the MySQL in my local storage but can be changed from the application.properties file, SQL Script is added for the same.
 Implemented Customer list with search functionality and pagination.
