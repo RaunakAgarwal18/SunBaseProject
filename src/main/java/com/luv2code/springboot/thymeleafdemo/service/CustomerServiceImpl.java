@@ -2,14 +2,10 @@ package com.luv2code.springboot.thymeleafdemo.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
-
 import com.luv2code.springboot.thymeleafdemo.dao.CustomerRepository;
 import com.luv2code.springboot.thymeleafdemo.entity.Customer;
 
@@ -27,8 +23,6 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<Customer> findAll() {
 		return customerRepository.findAllByOrderByLastNameAsc();
 	}
-
-
 
 	@Override
 	public Customer findById(int theId) {
@@ -49,7 +43,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public void save(Customer theCustomer) {
-		customerRepository.save(theCustomer);
+		if(theCustomer!=null)
+			customerRepository.save(theCustomer);
 	}
 
 	@Override

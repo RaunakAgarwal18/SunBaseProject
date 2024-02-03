@@ -21,18 +21,6 @@
 	<a th:href="@{/showFormForAdd}" class="btn btn-primary btn-sm mb-3">
 		Add Customer
 	</a>
-
-<!--	<div class="dropdown">-->
-<!--		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--			Search By-->
-<!--		</button>-->
-<!--		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-<!--			<a class="dropdown-item" href="#">First Name</a>-->
-<!--			<a class="dropdown-item" href="#">City</a>-->
-<!--			<a class="dropdown-item" href="#">Email</a>-->
-<!--			<a class="dropdown-item" href="#">Phone</a>-->
-<!--		</div>-->
-<!--	</div>-->
 	<form th:action="@{/search}" method="get">
 		<select name="criteria">
 			<option value="firstName">Search by First Name</option>
@@ -42,7 +30,7 @@
 		<input type="text" name="keyword" placeholder="Search...">
 		<button type="submit">Search</button>
 	</form>
-	<form th:action="@{/sync-customers}" method="post">
+	<form th:action="@{/saveNewCustomer}" method="get">
 		<button type="submit" class="btn btn-primary">Sync</button>
 	</form>
 	<table class="table table-bordered table-striped">

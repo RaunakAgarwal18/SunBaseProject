@@ -1,7 +1,6 @@
 package com.luv2code.springboot.thymeleafdemo.controller;
-
-import com.luv2code.springboot.thymeleafdemo.dao.CustomerRepository;
 import com.luv2code.springboot.thymeleafdemo.entity.Customer;
+import com.luv2code.springboot.thymeleafdemo.entity.CustomerResponse;
 import com.luv2code.springboot.thymeleafdemo.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,9 +17,6 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
-
-	@Autowired
-	private CustomerRepository customerRepository;
 
 	// Constructor injection for Employee Service
 	public CustomerController(CustomerService theeCustomerService){
@@ -43,10 +39,7 @@ public class CustomerController {
 		theModel.addAttribute("totalPages",customers.getTotalPages());
 		int idx = page*size;
 		theModel.addAttribute("size", idx);
-
-
-		// path of the html page
-		return "customers/list-customers";
+		return "customers/list-customers";   // path of the html page
 	}
 
 	@GetMapping("/showFormForAdd")
@@ -77,9 +70,9 @@ public class CustomerController {
 
 	@GetMapping("/search")
 	public String searchCustomers(@RequestParam("criteria") String criteria,
-								  @RequestParam("keyword") String keyword,
-								  @RequestParam(defaultValue = "0") int page,
-								  Model model) {
+								@RequestParam("keyword") String keyword,
+								@RequestParam(defaultValue = "0") int page,
+								Model model) {
 		List<Customer> searchResults = new ArrayList<>();
 		int pageSize = 5;
 		if ("firstName".equals(criteria)) {
@@ -102,8 +95,23 @@ public class CustomerController {
 		return "/customers/list-customers"; // Return the name of your Thymeleaf template
 	}
 
-
-
+	@GetMapping("/saveNewCustomer")
+	public String saveNewCustomers(){
+		AuthenticateController authenticateController = new AuthenticateController();
+		List<CustomerResponse> newCustomers = authenticateController.authenticate();
+		for(int i = 0 ; i<newCustomers.size(); i++){
+			Customer customer = new Customer(newCustomers.get(i).getFirstName(),
+					newCustomers.get(i).getLastName(),
+					newCustomers.get(i).getStreet(),
+					newCustomers.get(i).getAddress(),
+					newCustomers.get(i).getCity(),
+					newCustomers.get(i).getState(),
+					newCustomers.get(i).getEmail(),
+					newCustomers.get(i).getPhone());
+			customerService.save(customer);
+		}
+		return "redirect:/0";
+	}
 }
 
 

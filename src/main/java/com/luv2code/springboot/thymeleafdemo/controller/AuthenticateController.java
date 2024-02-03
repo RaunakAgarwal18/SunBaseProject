@@ -8,15 +8,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.*;
-
 import java.util.List;
 
 @Controller
-@RequestMapping("/auth")
+//@RequestMapping("/auth")
 public class AuthenticateController {
     @Value("${authentication.url}")
     private String authenticationUrl;
@@ -27,7 +24,6 @@ public class AuthenticateController {
     @Value("${authentication.password}")
     private String password;
 
-    @GetMapping("/authenticate")
     @ResponseBody
     public List<CustomerResponse> authenticate() {
         MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
@@ -35,7 +31,6 @@ public class AuthenticateController {
         RestClient restClient = RestClient.builder()
                 .messageConverters(converters -> converters.add(mappingJackson2HttpMessageConverter))
                 .build();
-
         String uri = "https://qa.sunbasedata.com/sunbase/portal/api/assignment_auth.jsp";
         AccessToken token = null;
         ResponseEntity<String> response = restClient.post()
@@ -67,7 +62,4 @@ public class AuthenticateController {
         }
         return list;
     }
-    
-
-
 }

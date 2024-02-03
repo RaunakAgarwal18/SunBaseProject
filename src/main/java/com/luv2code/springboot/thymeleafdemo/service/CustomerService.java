@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.luv2code.springboot.thymeleafdemo.entity.Customer;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 public interface CustomerService {
 

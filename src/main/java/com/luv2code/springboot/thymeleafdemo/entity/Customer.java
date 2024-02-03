@@ -23,35 +23,27 @@ public class Customer {
 	private int id;
 	
 	@Column(name="first_name")
-	@JsonProperty("first_name")
 	private String firstName;
 	
 	@Column(name="last_name")
-	@JsonProperty("last_name")
 	private String lastName;
 
 	@Column(name="street")
-	@JsonProperty("street")
 	private String street;
 
 	@Column(name="address")
-	@JsonProperty("street")
 	private String address;
 
 	@Column(name="city")
-	@JsonProperty("city")
 	private String city;
 
 	@Column(name="state")
-	@JsonProperty("state")
 	private String state;
 
 	@Column(name="email")
-	@JsonProperty("email")
 	private String email;
 
 	@Column(name="phone")
-	@JsonProperty("phone")
 	private String phone;
 		
 	// define constructors
