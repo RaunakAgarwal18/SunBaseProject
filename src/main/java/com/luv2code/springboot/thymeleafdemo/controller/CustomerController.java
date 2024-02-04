@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -23,7 +24,7 @@ public class CustomerController {
 		customerService = theeCustomerService;
 	}
 
-
+	public HashMap<String,Integer> map = new HashMap<>();
 	@GetMapping("/")
 	public String test(){
 		return "redirect:/0";
@@ -98,15 +99,30 @@ public class CustomerController {
 		AuthenticateController authenticateController = new AuthenticateController();
 		List<CustomerResponse> newCustomers = authenticateController.authenticate();
 		for(int i = 0 ; i<newCustomers.size(); i++){
-			Customer customer = new Customer(newCustomers.get(i).getFirstName(),
-					newCustomers.get(i).getLastName(),
-					newCustomers.get(i).getStreet(),
-					newCustomers.get(i).getAddress(),
-					newCustomers.get(i).getCity(),
-					newCustomers.get(i).getState(),
-					newCustomers.get(i).getEmail(),
-					newCustomers.get(i).getPhone());
-			customerService.save(customer);
+			Customer customer = null;
+			if(!map.containsKey(newCustomers.get(i).getUuid())) {
+				customer = new Customer(newCustomers.get(i).getFirstName(),
+						newCustomers.get(i).getLastName(),
+						newCustomers.get(i).getStreet(),
+						newCustomers.get(i).getAddress(),
+						newCustomers.get(i).getCity(),
+						newCustomers.get(i).getState(),
+						newCustomers.get(i).getEmail(),
+						newCustomers.get(i).getPhone());
+				customerService.save(customer);
+				map.put(newCustomers.get(i).getUuid(),customer.getId());
+			}else {
+				customer = customerService.findById(map.get(newCustomers.get(i).getUuid()));
+				customer.setFirstName(newCustomers.get(i).getFirstName());
+				customer.setLastName(newCustomers.get(i).getLastName());
+				customer.setStreet(newCustomers.get(i).getStreet());
+				customer.setAddress(newCustomers.get(i).getAddress());
+				customer.setCity(newCustomers.get(i).getCity());
+				customer.setState(newCustomers.get(i).getState());
+				customer.setEmail(newCustomers.get(i).getEmail());
+				customer.setPhone(newCustomers.get(i).getPhone());
+				customerService.save(customer);
+			}
 		}
 		return "redirect:/0";
 	}
