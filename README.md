@@ -7,3 +7,5 @@ Technologies used :
 
 Implemented the MySQL in my local storage but can be changed from the application.properties file, SQL Script is added for the same.
 Implemented Customer list with search functionality and pagination.
+
+Implemented the sync function where customers returned from the api will be saved in the database if not already otherwise will be updated.
